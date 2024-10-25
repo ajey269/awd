@@ -1,0 +1,66 @@
+TreeViewForm.aspx
+
+  <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TreeviewForm.aspx.cs"
+Inherits="prac3c.TreeviewForm" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+ <title></title>
+</head>
+<body>
+ <form id="form1" runat="server">
+ <div>
+ <asp:TreeView ID="TreeView1" runat="server" ImageSet="Arrows"
+OnSelectedNodeChanged="TreeView1_SelectedNodeChanged">
+ <HoverNodeStyle Font-Underline="True" ForeColor="#5555DD" />
+ <Nodes>
+ <asp:TreeNode Text="Vikas College" Value="college">
+ <asp:TreeNode Text="BSC.CS" Value="BSC.CS">
+ <asp:TreeNode Text="TYCS" Value="TYCS"></asp:TreeNode>
+ </asp:TreeNode>
+ <asp:TreeNode Text="BSC.IT" Value="BSC.IT">
+ <asp:TreeNode Text="TYIT" Value="TYIT">
+ <asp:TreeNode Text="AWD" Value="AWD">
+ <asp:TreeNode Text="Prac1"Value="Prac1"></asp:TreeNode>
+ <asp:TreeNode Text="prac2" Value="prac2"></asp:TreeNode>
+ <asp:TreeNode Text="prac4" Value="prac4"></asp:TreeNode>
+ </asp:TreeNode>
+ </asp:TreeNode>
+ </asp:TreeNode>
+ </asp:TreeNode>
+  </Nodes>
+ <NodeStyle Font-Names="Tahoma" Font-Size="10pt" ForeColor="Black" HorizontalPadding="5px"
+NodeSpacing="0px" VerticalPadding="0px" />
+ <ParentNodeStyle Font-Bold="False" />
+ <SelectedNodeStyle Font-Underline="True" ForeColor="#5555DD" HorizontalPadding="0px"
+VerticalPadding="0px" />
+ </asp:TreeView>
+ <br />
+&nbsp;<asp:TextBox ID="TextBox1" runat="server" style="margin-top: 0px" Width="466px"></asp:TextBox>
+ </div>
+ </form>
+  </body>
+</html>
+
+
+  TreeViewForm.aspx.cs :
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace prac3c
+{
+ public partial class TreeviewForm : System.Web.UI.Page
+ {
+ protected void Page_Load(object sender, EventArgs e)
+ {
+ }
+ protected void TreeView1_SelectedNodeChanged(object sender, EventArgs e)
+ {
+ TextBox1.Text="Selected Node: "+TreeView1.SelectedNode.Text.ToString().ToUpper();
+ }
+ }
+}
