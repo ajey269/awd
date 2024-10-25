@@ -1,0 +1,99 @@
+Web.sitemap:
+<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+ <siteMapNode url="~/Home.aspx" title="Home page1" description="">
+ <siteMapNode url="~/admin/admin.aspx" title="admin page" description="" />
+ <siteMapNode url="~/staff/staffHome.aspx" title="staff home" description="" >
+ <siteMapNode url="~/staff/addStudent.aspx" title="add student" description=""/>
+ </siteMapNode>
+ <siteMapNode url="~/students/studentHome.aspx" title="student home" description="">
+ <siteMapNode url="~/students/exam.aspx" title="exam page" description="">
+ <siteMapNode url="~/students/result.aspx" title="result page" description=""/>
+ </siteMapNode>
+ </siteMapNode>
+ </siteMapNode>
+</siteMap>
+
+
+Site1.master:
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs"
+Inherits="Practical5A.Site1" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+ <title></title>
+ <asp:ContentPlaceHolder ID="head" runat="server">
+ </asp:ContentPlaceHolder>
+</head>
+<body>
+ <form id="form1" runat="server">
+ <div>
+ <asp:SiteMapPath ID="SiteMapPath1" runat="server" Font-Names="Verdana" Font-Size="0.8em"
+PathSeparator=" : ">
+ <CurrentNodeStyle ForeColor="#333333" />
+ <NodeStyle Font-Bold="True" ForeColor="#990000" />
+ <PathSeparatorStyle Font-Bold="True" ForeColor="#990000" />
+ <RootNodeStyle Font-Bold="True" ForeColor="#FF8000" />
+ </asp:SiteMapPath>
+ <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+ </asp:ContentPlaceHolder>
+ <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" />
+ </div>
+ </form>
+</body>
+</html>
+
+
+Web.config
+
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ For more information on how to configure your ASP.NET application, please visit
+ https://go.microsoft.com/fwlink/?LinkId=169433
+ -->
+<configuration>
+ <system.web>
+ <siteMap>
+ <providers>
+ <remove name="MySqlSiteMapProvider"/>
+ </providers>
+ </siteMap>
+ <compilation debug="true" targetFramework="4.7.2" />
+ <httpRuntime targetFramework="4.7.2" />
+ </system.web>
+ <system.codedom>
+ <compilers>
+ <compiler language="c#;cs;csharp" extension=".cs"
+type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider,
+Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral,
+PublicKeyToken=31bf3856ad364e35" warningLevel="4" compilerOptions="/langversion:default
+/nowarn:1659;1699;1701" />
+ <compiler language="vb;vbs;visualbasic;vbscript" extension=".vb"
+type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.VBCodeProvider,
+Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral,
+PublicKeyToken=31bf3856ad364e35" warningLevel="4" compilerOptions="/langversion:default /nowarn:41008
+/define:_MYTYPE=\&quot;Web\&quot; /optionInfer+" />
+ </compilers>
+ </system.codedom>
+</configuration>
+
+
+
+Home.aspx :
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true"
+CodeBehind="Home.aspx.cs" Inherits="Practical5A.Home" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+ <h1>This is my home page</h1>
+ <p>
+ <asp:HyperLink ID="HyperLink1" runat="server" ForeColor="#663300"
+NavigateUrl="~/admin/admin.aspx">Admin</asp:HyperLink>
+ &nbsp;&nbsp;&nbsp;&nbsp;
+ <asp:HyperLink ID="HyperLink2" runat="server" ForeColor="Aqua"
+NavigateUrl="~/staff/staffHome.aspx">Staff</asp:HyperLink>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <asp:HyperLink ID="HyperLink3" runat="server" ForeColor="#FF6600"
+NavigateUrl="~/students/studentHome.aspx">Students</asp:HyperLink>
+</p>
+</asp:Content>
