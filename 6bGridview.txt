@@ -1,0 +1,150 @@
+6. Write the program for the following: [cite: 99, 100]
+
+b. Create a web application to display Using Disconnected Data Access and Databinding using GridView. [cite: 121, 122]
+
+**WebForm1.aspx**
+
+```
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs"
+Inherits="prac6b.WebForm1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+
+<title></title>
+
+</head>
+
+<body>
+
+<form id="form1" runat="server">
+
+<div>
+
+<asp:Label ID="Label1" runat="server" Text="Employee Salary >"> </asp:Label>
+&nbsp;&nbsp;&nbsp;
+<asp:TextBox ID="TextBox1" runat="server" TextMode="Number"> </asp:TextBox>
+
+<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
+
+ControlToValidate="TextBox1" ErrorMessage="*" ValidationGroup="a"> </asp:RequiredFieldValidator>
+
+<br/>
+
+<br />
+
+<asp:Button $ID=^{\prime}$Button1" runat="server" OnClick="Button1_Click" Text="Show Data"
+
+ValidationGroup$=^{\prime\prime}a^{\prime\prime}$ Width="243px" />
+
+<br />
+
+<br />
+
+<asp:GridView ID="GridView1" runat="server" BackColor="White" BorderColor="#CC9966"
+
+BorderStyle="None" BorderWidth="1px" CellPadding="4">
+
+<FooterStyle BackColor="#FFFFCC" ForeColor="#330099" />
+
+<HeaderStyle BackColor="#990000" Font-Bold="True" ForeColor="#FFFFCC" />
+
+<PagerStyle BackColor="#FFFFCC" ForeColor="#330099" HorizontalAlign="Center" />
+
+<RowStyle BackColor="White" ForeColor="#330099" />
+
+<SelectedRowStyle BackColor="#FFCC66" Font-Bold="True" ForeColor="#663399" />
+
+<SortedAscendingCellStyle BackColor="#FEFCEB" />
+
+<SortedAscending HeaderStyle BackColor="#AF0101" />
+
+<SortedDescendingCellStyle BackColor="#F6F0C0" />
+
+<SortedDescending HeaderStyle BackColor="#7E0000" />
+
+</asp:GridView>
+
+<br />
+
+<asp:Label ID="Label2" runat="server"> </asp:Label>
+
+</div>
+
+</form>
+
+</body>
+
+</html>
+```
+
+**WebForm1.aspx.cs**
+
+```
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web.Configuration;
+
+namespace prac6b
+{
+    public partial class WebForm1 : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlConnection con = new
+                SqlConnection(WebConfigurationManager.ConnectionStrings["c1"].ConnectionString);
+                con.Open();
+                String sql = "select * from Employee where Esalary>" + TextBox1.Text;
+                SqlDataAdapter da = new SqlDataAdapter(sql, con);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                GridView1.DataSource = ds.Tables[0];
+                GridView1.DataBind();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                Label2.Text = ex.Message;
+            }
+        }
+    }
+}
+```
+
+**OUTPUT:**
+
+Employee Salary > 0 [cite: 122, 123]
+
+Show Data [cite: 122, 123]
+
+|Eid|Ename|Esalary|
+|:---|:---|:---|
+|1|Suraj Kadam|40000|
+|2|ABC|10000|
+|3|Rupesh|12500|
+|4|Sairaj|20000| [cite: 128]
+
+Employee Salary > 10000 [cite: 122, 123]
+
+Show Data [cite: 122, 123]
+
+|Eid|Ename|Esalary|
+|:---|:---|:---|
+|1|Suraj Kadam|40000|
+|3|Rupesh|12500|
+|4|Sairaj|20000| [cite: 128]
