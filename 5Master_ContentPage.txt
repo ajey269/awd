@@ -1,0 +1,64 @@
+Site1.master
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs"
+Inherits="practical5B.Site1" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+ <title></title>
+ <link rel="stylesheet" type="text/css" href="~/css/StyleSheet1.css" />
+ <asp:ContentPlaceHolder ID="head" runat="server">
+ </asp:ContentPlaceHolder>
+</head>
+<body>
+ <form id="form1" runat="server">
+ <div>
+ <header id="header">
+ <h1>Learning</h1>
+ </header>
+ <nav id="nav">
+ <span>Logo</span>
+ <ul>
+ <li><a href="#">Home</a></li>
+ <li><a href="#">About</a></li>
+ <li><a href="#">Artical</a></li>
+ <li><a href="#">Contact</a></li>
+ </ul>
+ </nav>
+ <div id="con">
+ <div id="content">
+ <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+</asp:ContentPlaceHolder
+</div>
+ <aside>
+ <p><a href="#">news</a></p>
+ <p><a href="#">news</a></p>
+ <p><a href="#">news</a></p>
+ <p><a href="#">news</a></p>
+</aside>
+ </div>
+ <footer>
+ <p>@CopyRight</p>
+ </footer>
+ </div>
+ </form>
+</body>
+</html>
+
+
+
+
+
+
+
+WebForm1.aspx
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true"
+CodeBehind="WebForm1.aspx.cs" Inherits="practical5B.WebForm1" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+ <h1>this is my child master page</h1>
+ <p>
+ <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/WebForm2.aspx">second master
+page</asp:HyperLink>
+ </p>
+</asp:Content>
