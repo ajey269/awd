@@ -1,0 +1,48 @@
+Webform2.aspx:
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm2.aspx.cs"
+Inherits="Practical6.WebForm2" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+ <title></title>
+</head>
+<body>
+ <form id="form1" runat="server">
+ <div>
+ <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
+ </div>
+ <asp:Label ID="Label1" runat="server"></asp:Label>
+ </form>
+</body>
+</html>
+
+
+
+
+WebForm2.aspx.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace Practical6
+{
+ public partial class WebForm2 : System.Web.UI.Page
+ {
+ int x = 0;
+ protected void Page_Load(object sender, EventArgs e)
+ {
+ if(!IsPostBack)
+ {
+ ViewState.Add("myx",x);
+ }
+ }
+ protected void Button1_Click(object sender, EventArgs e)
+ {
+ x = int.Parse(ViewState["myx"].ToString());
+ x++;
+ Label1.Text="You page refreshed "+ x.ToString()+" Times";
+ ViewState["myx"]= x;
+ }
+}
