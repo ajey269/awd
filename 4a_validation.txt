@@ -1,0 +1,100 @@
+Web.config
+
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ For more information on how to configure your ASP.NET application, please visit
+ https://go.microsoft.com/fwlink/?LinkId=169433
+ -->
+<configuration>
+ <system.web>
+ <compilation debug="true" targetFramework="4.7.2" />
+ <httpRuntime targetFramework="4.7.2" />
+ </system.web>
+<appSettings>
+<add key="ValidationSettings:UnobtrusiveValidationMode" value="None"/>
+</appSettings>
+ <system.codedom>
+ <compilers>
+ <compiler language="c#;cs;csharp" extension=".cs"
+type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider,
+Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral,
+PublicKeyToken=31bf3856ad364e35" warningLevel="4" compilerOptions="/langversion:default
+/nowarn:1659;1699;1701" />
+ <compiler language="vb;vbs;visualbasic;vbscript" extension=".vb"
+type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.VBCodeProvider,
+Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral,
+PublicKeyToken=31bf3856ad364e35" warningLevel="4" compilerOptions="/langversion:default /nowarn:41008
+/define:_MYTYPE=\&quot;Web\&quot; /optionInfer+" />
+ </compilers>
+ </system.codedom>
+</configuration>
+
+
+
+ValidationForm.aspx
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ValidatorForm.aspx.cs"
+Inherits="prac4a.ValidatorForm" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+ <title></title>
+</head>
+<body>
+ <form id="form1" runat="server">
+
+<div>
+<p>
+Name: <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox><asp:RequiredFieldValidator
+ID="RequiredFieldValidator1" runat="server" ErrorMessage="Please provide name"
+ControlToValidate="TextBox1" ValidationGroup="a"></asp:RequiredFieldValidator>
+</p>
+ <p>
+ Age:
+ <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+ <asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="TextBox2"
+ErrorMessage="Age between 17-25" MaximumValue="25" MinimumValue="17"
+ValidationGroup="a"></asp:RangeValidator>
+</p>
+ <p>
+ <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Add" ValidationGroup="a"
+/>
+</p>
+ <p>
+ <asp:Label ID="Label1" runat="server"></asp:Label>
+</p>
+ <p>
+ <asp:Label ID="Label2" runat="server"></asp:Label>
+</p>
+ </div>
+ </form>
+</body>
+</html>
+
+
+
+
+ValidationForm.aspx.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace prac4a
+{
+ public partial class ValidatorForm : System.Web.UI.Page
+ {
+ protected void Page_Load(object sender, EventArgs e)
+ {
+ }
+ protected void Button1_Click(object sender, EventArgs e)
+ {
+ Label1.Text="Welcome "+TextBox1.Text;
+ Label2.Text="Your Age is: "+TextBox2.Text;
+  }
+ }
+}
+
+
