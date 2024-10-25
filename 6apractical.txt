@@ -1,0 +1,257 @@
+6. Write the program for the following:
+
+a. Create a web application for inserting and deleting records from a database. [cite: 99, 100]
+
+**WebForm1.aspx:**
+
+```
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs"
+Inherits="InsertandDelete. WebForm1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+
+<title></title>
+
+</head>
+
+<body>
+
+<form id="form1" runat="server">
+
+<div>
+
+<asp:Button ID="Button1" runat="server" Text="new Author" OnClick="Button1_Click" />
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<asp:Button ID="Button2" runat="server" Text="remove Author" OnClick="Button2_Click" />
+
+<br/>
+
+<br />
+
+<asp:MultiView ID="MultiView1" runat="server">
+
+<asp:View ID="View1" runat="server">
+
+<asp:Label ID="Label1" runat="server" Text="ID"> </asp:Label>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<asp:TextBox ID="TextBox1" runat="server" TextMode="Number"
+
+Width="340px"> </asp:TextBox>
+
+<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
+
+ControlToValidate="TextBox1" ErrorMessage="*" ValidationGroup="a"></asp:RequiredFieldValidator>
+
+<br/>
+
+<br />
+
+<asp:Label ID="Label2" runat="server" Text="Author Name"> </asp:Label>
+
+&nbsp;&nbsp;
+<asp:TextBox ID="TextBox2" runat="server" MaxLength="50" Width="334px"> </asp:TextBox>
+<asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server"
+
+ControlToValidate="TextBox2" ErrorMessage="*" ValidationGroup="a"> </asp:RequiredFieldValidator>
+
+<br />
+
+<br/>
+
+<asp:Label ID="Label3" runat="server" Text="Phone Number"> </asp:Label>
+&nbsp;&nbsp;
+<asp:TextBox ID="TextBox3" runat="server" MaxLength="10" Width="321px"> </asp:TextBox>
+<asp:RequiredFieldValidator ID="Required FieldValidator5" runat="server" Display="Dynamic"
+
+ErrorMessage="*" ValidationGroup="a" ControlToValidate="TextBox3"></asp:RequiredFieldValidator>
+<asp:RegularExpression Validator ID="RegularExpressionValidator1" runat="server"
+ControlToValidate="TextBox3" ErrorMessage="invalide number" ValidationExpression="\d{10}"
+ValidationGroup="a"></asp:Regular Expression Validator>
+
+<br/>
+
+<br />
+
+<asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Insert"
+
+ValidationGroup="a" />
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+<asp:Label ID="Label4" runat="server"> </asp:Label>
+
+</asp:View>
+
+<asp:View ID="View2" runat="server">
+
+<br />
+
+<asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True"
+
+OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" Width="202px">
+
+</asp:DropDownList>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<asp:Label ID="Label5" runat="server"> </asp:Label>
+
+<br />
+
+<br />
+
+<asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Delete" />
+
+&nbsp;&nbsp;&nbsp;
+
+<asp:Label ID="Label6" runat="server"> </asp:Label>
+
+</asp:View>
+
+</asp:MultiView>
+
+</div>
+
+</form>
+
+</body>
+
+</html>
+```
+
+**WebForm1.aspx.cs:**
+
+```
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web.Configuration;
+
+namespace InsertandDelete
+{
+    public partial class WebForm1 : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            MultiView1.SetActiveView(View1);
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            MultiView1.SetActiveView(View2);
+        }
+
+        updateDropdownList();
+        Label5.Text = "";
+        Label6.Text = "";
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlConnection conn = new
+                SqlConnection(WebConfigurationManager.ConnectionStrings["c1"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("insert into Authors values(@id,@name,@phone)", conn);
+                cmd.Parameters.AddWithValue("@id", TextBox1.Text);
+                cmd.Parameters.AddWithValue("@name", TextBox2.Text);
+                cmd.Parameters.AddWithValue("@phone", TextBox3.Text);
+                cmd.ExecuteNonQuery();
+                Label4.Text = "Record is added successfully";
+                TextBox1.Text = "";
+                TextBox2.Text = "";
+                TextBox3.Text = "";
+                conn.Close();
+                updateDropdownList();
+            }
+            catch (Exception ex)
+            {
+                Label4.Text = ex.Message;
+            }
+        }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlConnection con = new
+                SqlConnection(WebConfigurationManager.ConnectionStrings["c1"].ConnectionString);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("delete from Authors where Auid=@id", con);
+                cmd.Parameters.AddWithValue("@id", DropDownList1.SelectedItem.Text);
+                cmd.ExecuteNonQuery();
+                con.Close();
+                Label6.Text = "record deleted successfully";
+                updateDropdownList();
+                Label5.Text = "";
+            }
+            catch (Exception ex) { Label6.Text = ex.Message; }
+        }
+
+        public void updateDropdownList()
+        {
+            try
+            {
+                SqlConnection con = new
+                SqlConnection(WebConfigurationManager.ConnectionStrings["c1"].ConnectionString);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("select * from Authors", con);
+                SqlDataReader dr = cmd.ExecuteReader();
+                DropDownList1.DataSource = dr;
+                DropDownList1.DataTextField = "Auid";
+                DropDownList1.DataValueField = "Auname";
+                DropDownList1.DataBind();
+                con.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
+
+        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Label5.Text = "Selected Author is " + DropDownList1.SelectedValue;
+        }
+    }
+}
+```
+
+**OUTPUT:**
+
+*To add a new author*
+
+new Author [cite: 100, 101]
+
+ID: 1 [cite: 102, 103]
+
+Author Name: Suraj Kadam [cite: 104, 105]
+
+Phone Number: 1234567890 [cite: 104, 105]
+
+Insert [cite: 104, 105]
+
+Record is added successfully [cite: 104, 105]
+
+*To remove an author*
+
+remove Author [cite: 100, 101]
+
+Select Author: 1 [cite: 106, 107]
+
+Delete [cite: 106, 107]
+
+record deleted successfully [cite: 106, 107]
