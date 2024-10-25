@@ -1,0 +1,114 @@
+.aspx file 
+
+<body>
+ <center>
+ <form id="form1" runat="server">
+ <div>
+ <h1>Registeration Form</h1>
+ <br />
+ <p>Name:&nbsp;&nbsp;
+ <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+ </p>
+ <p>Email Id:&nbsp;
+ <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+ </p>
+ <p>
+Course:&nbsp;&nbsp;
+ <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+ </p>
+ <p>
+ Gender:&nbsp;&nbsp;&nbsp;
+ <asp:RadioButton ID="RadioButton1" runat="server" GroupName="gender" Text="MALE" />
+ &nbsp;&nbsp;&nbsp;&nbsp;
+ <asp:RadioButton ID="RadioButton2" runat="server" GroupName="gender" Text="FEMALE" />
+ </p>
+ <p>
+ Esports:
+ <asp:CheckBox ID="CheckBox1" runat="server" Text="CLASH OF CLANS" />
+ <asp:CheckBox ID="CheckBox2" runat="server" Text="PUBG" />
+ <asp:CheckBox ID="CheckBox3" runat="server" Text="VALORANT" />
+ <asp:CheckBox ID="CheckBox4" runat="server" Text="CALL OF DUTY" />
+ </p>
+ <p>
+ <asp:Button ID="Button1" runat="server" Text="Register" OnClick="Button1_Click" />
+ </p>
+ <br />
+ <p>
+ <asp:Label ID="Label1" runat="server"></asp:Label>
+ </p>
+ <p>
+<asp:Label ID="Label2" runat="server"></asp:Label>
+ </p>
+ <p>
+ <asp:Label ID="Label3" runat="server"></asp:Label>
+ </p>
+ <p>
+ <asp:Label ID="Label4" runat="server"></asp:Label>
+ </p>
+ <p>
+ <asp:Label ID="Label5" runat="server"></asp:Label>
+ </p>
+ </div>
+ </form>
+ <p>
+ &nbsp;</p>
+ </center>
+</body>
+
+
+
+aspx.cs file 
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+namespace prac3a
+{
+ public partial class Register : System.Web.UI.Page
+ {
+ protected void Page_Load(object sender, EventArgs e)
+ {
+ }
+ protected void Button1_Click(object sender, EventArgs e)
+ {
+String Name=TextBox1.Text;
+String Email=TextBox2.Text;
+String Course=TextBox3.Text;
+String gender = "";
+
+if (RadioButton1.Checked)
+ {
+ gender = RadioButton1.Text;
+ }
+ else
+ {
+ gender = RadioButton2.Text;
+ }
+ String Esports = "";
+ if (CheckBox1.Checked)
+ {
+ Esports=CheckBox1.Text;
+ }
+ if(CheckBox2.Checked)
+ {
+ Esports=CheckBox2.Text;
+ }
+ if (CheckBox3.Checked)
+ {
+ Esports=CheckBox3.Text;
+ }
+ if(CheckBox4.Checked)
+ {
+ Esports=CheckBox4.Text;
+ }
+ Label1.Text = "Your name is: " + Name;
+ Label2.Text="Email Id: "+Email;
+ Label3.Text="Course: "+Course;
+ Label4.Text = "Gender : " + gender;
+ Label5.Text = "Esports: " + Esports;
+ }
+ }
+}
